@@ -20,15 +20,6 @@ public class Startup
             .UseTestServer(options => options.PreserveExecutionContext = true)
             .UseStartup<AspNetCoreStartup>());
 
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddDefaultCorrelationId(options =>
-        { 
-            options.AddToLoggingScope = true;
-            options.IncludeInResponse = true;
-        });
-    }
-
     public void Configure(ILoggerFactory loggerFactory, ITestOutputHelperAccessor accessor)
     {
         loggerFactory.AddProvider(new XunitTestOutputLoggerProvider(accessor, (_, _) => true));
@@ -48,5 +39,14 @@ public class Startup
                 return context.Response.WriteAsync("Headers: " + string.Join(",", context.Request.Headers.Select(x => x.ToString())));
             });
         }
+    }
+    
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDefaultCorrelationId(options =>
+        { 
+            options.AddToLoggingScope = true;
+            options.IncludeInResponse = true;
+        });
     }
 }
