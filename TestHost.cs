@@ -27,10 +27,8 @@ public class TestHost
 
         var responseString = await response.Content.ReadAsStringAsync();
 
-        _logger.LogInformation("Response from server: {ResponseString}", responseString);
-        _logger.LogInformation("X-Correlation-ID from server: {X-Correlation-ID}",
+        _logger.LogDebug("Response from server: {ResponseString}", responseString);
+        _logger.LogDebug("X-Correlation-ID from server: {X-Correlation-ID}",
             string.Join(",", response.Headers.GetValues("X-Correlation-ID")));
-        
-        _logger.LogDebug("doesn't show");
     }
 }
